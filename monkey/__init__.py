@@ -14,6 +14,7 @@ __version__ = '0.1.1'
 def main():
     if args.version:
         print(__version__)
+        return
     configure()
     from .job import Job
     thread_pool = [threading.Thread(target=Job.worker, name='Worker%d' % i) for i in range(1, settings.threads+1)]

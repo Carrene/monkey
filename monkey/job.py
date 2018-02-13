@@ -34,7 +34,8 @@ class Job:
     def do(self):
         print('Doing %s' % self.worker_name)
         data = self.read_data()
-        thread_local.queue.put(data)
+        if data:
+            thread_local.queue.put(data)
 
     @classmethod
     def worker(cls):

@@ -39,7 +39,7 @@ pip install path/to/monkey
 ## Running
 
 ```bash
-LD_LIBRARY_PATH=/opt/mqm/lib64 monkey
+LD_LIBRARY_PATH="/opt/mqm/lib64" MQSERVER="TEST.CHANNEL/TCP/127.0.0.1(8000)" monkey
 ```
 
 ## Setup a MQ server for testing purposes:

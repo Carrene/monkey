@@ -18,6 +18,7 @@ threads: 4
 socket_file: /tmp/a.s
 backlog: 10
 queue_size: 512
+chunk: 2048
 """
 
 
