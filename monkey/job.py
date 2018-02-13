@@ -20,22 +20,22 @@ class Job:
     def worker_name(self):
         return threading.current_thread().name
 
-    def read_data(self):
-        data = b''
+    def do(self):
+        print('Doing %s' % self.worker_name)
+        message = b''
         while True:
             chunk = self.connection.recv(settings.chunk)
             if not chunk:
                 print(self.worker_name, 'Done')
                 break
-            data += chunk
-            print(self.worker_name, data)
-        return data
-
-    def do(self):
-        print('Doing %s' % self.worker_name)
-        data = self.read_data()
-        if data:
-            thread_local.queue.put(data)
+            elif b'\n' in chunk:
+                chunk, next_message = chunk.split(b'\n')
+                message += chunk
+                print(self.worker_name, message)
+                thread_local.queue.put(message)
+                message = next_message
+            else:
+                message += chunk
 
     @classmethod
     def worker(cls):
