@@ -31,8 +31,10 @@ class Job:
             elif b'\n' in chunk:
                 chunk, next_message = chunk.split(b'\n')
                 message += chunk
-                print(self.worker_name, message)
-                thread_local.queue.put(message)
+                message = message.strip()
+                if message:
+                    print(self.worker_name, message)
+                    thread_local.queue.put(message)
                 message = next_message
             else:
                 message += chunk
