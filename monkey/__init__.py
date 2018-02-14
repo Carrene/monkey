@@ -3,12 +3,13 @@ import socket
 import sys
 import os
 import threading
+import stat
 
 from .configuration import settings, configure
 from .cli import args
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def main():
@@ -30,6 +31,7 @@ def main():
     unix_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     print('Listening on %s' % settings.socket_file)
     unix_socket.bind(settings.socket_file)
+    os.chmod(settings.socket_file, stat.S_IRWXU + stat.S_IRWXG + stat.S_IROTH)
     unix_socket.listen(settings.backlog)
 
     for thread in thread_pool:

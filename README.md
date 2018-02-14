@@ -107,3 +107,32 @@ Open another terminal and check the `amqsgetc` output:
 cd /opt/mqm/samp/bin/
 echo "HI" | ./amqsputc ${MQIPY_TEST_QUEUE} ${MQIPY_TEST_QUEUEMANAGER}
 ```
+
+
+All together
+```bash
+###############################
+
+source /opt/mqm/bin/setmqenv -s
+export MQIPY_TEST_QUEUEMANAGER="TEST.QM"
+export MQIPY_TEST_QUEUE="TEST.QUEUE"
+export MQIPY_TEST_CHANNEL="TEST.CHANNEL"
+export MQIPY_TEST_HOST="127.0.0.1"
+export MQIPY_TEST_PORT="8000"
+sudo -u mqm crtmqm ${MQIPY_TEST_QUEUEMANAGER}
+sudo -u mqm strmqm ${MQIPY_TEST_QUEUEMANAGER}
+echo "DEFINE QLOCAL (${MQIPY_TEST_QUEUE})" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+echo "
+DEFINE CHL(${MQIPY_TEST_CHANNEL}) CHLTYPE(SVRCONN)
+DEFINE LISTENER(TCP.LISTENER.1) TRPTYPE(TCP) PORT(${MQIPY_TEST_PORT}) CONTROL(QMGR) REPLACE
+START LISTENER(TCP.LISTENER.1)
+ALTER QMGR CHLAUTH(DISABLED)
+" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+sudo -u mqm setmqaut -m ${MQIPY_TEST_QUEUEMANAGER} -t qmgr -p mqm +all
+sudo -u mqm setmqaut -m ${MQIPY_TEST_QUEUEMANAGER} -t queue -p mqm -n ${MQIPY_TEST_QUEUE} +all
+echo "REFRESH SECURITY" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+export MQSERVER="${MQIPY_TEST_CHANNEL}/TCP/${MQIPY_TEST_HOST}(${MQIPY_TEST_PORT})"
+
+###############################
+
+```
