@@ -92,11 +92,11 @@ echo "HI" | ./amqsput ${TEST_QUEUE} ${TEST_QUEUEMANAGER}
 ```
 
 
-
 ## IBM websphere useful commands
 NOTICE THAT: Add the binaries to PATH:
 ```bash 
 echo "export PATH=$PATH:/opt/mqm/bin"
+echo "export PATH=$PATH:/opt/mqm/samp/bin"
 source .bashrc
 ```
 + Create a queue manager:
@@ -124,9 +124,10 @@ Or you can shut it down immediately:
 endmqm -i $QUEUEU_MANAGER_NAME
 ```
 
-+ In order to run a message queue at booting:
++ In order to run a message queue as a service save the follwoing configuration
+    on `/etc/systemd/system/mq@.service`
+
 ```bash
-echo "
 [Unit]
 Description=IBM MQ V8 queue manager %I
 After=network.target
@@ -141,14 +142,16 @@ LimitNOFILE=10240
 LimitNPROC=4096
 [Install]
 WantedBy=multi-user.target
-" > /etc/systemd/system/mq@.service
+```
+
++ Reload deamons:
+```bash
 systemctl daemon-reload
-systemctl enable mq@.service
 ```
 
 + To start your queue manager use the following commands:
 ```bash
-systemctl start mq@foo_QM
+systemctl start mq@<QUEUE_MANAGER_NAME>.service
 ```
 
 + Display queue managers and their status:
