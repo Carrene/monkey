@@ -56,42 +56,42 @@ Configure the `QueueManager` to listen on TCP.
 
 ```bash
 echo "
-DEFINE CHL(${MQIPY_TEST_CHANNEL}) CHLTYPE(SVRCONN)
-DEFINE LISTENER(TCP.LISTENER.1) TRPTYPE(TCP) PORT(${MQIPY_TEST_PORT}) CONTROL(QMGR) REPLACE
+DEFINE CHL(${TEST_CHANNEL}) CHLTYPE(SVRCONN)
+DEFINE LISTENER(TCP.LISTENER.1) TRPTYPE(TCP) PORT(${TEST_PORT}) CONTROL(QMGR) REPLACE
 START LISTENER(TCP.LISTENER.1)
 ALTER QMGR CHLAUTH(DISABLED)
-" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+" | sudo -u mqm runmqsc ${TEST_QUEUEMANAGER}
 ```
 
 Permissions
 
 ```bash
-sudo -u mqm setmqaut -m ${MQIPY_TEST_QUEUEMANAGER} -t qmgr -p mqm +all
-sudo -u mqm setmqaut -m ${MQIPY_TEST_QUEUEMANAGER} -t queue -p mqm -n ${MQIPY_TEST_QUEUE} +all
-echo "REFRESH SECURITY" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+sudo -u mqm setmqaut -m ${TEST_QUEUEMANAGER} -t qmgr -p mqm +all
+sudo -u mqm setmqaut -m ${TEST_QUEUEMANAGER} -t queue -p mqm -n ${TEST_QUEUE} +all
+echo "REFRESH SECURITY" | sudo -u mqm runmqsc ${TEST_QUEUEMANAGER}
 ```
 
 
 #### Finally issue the `MQSERVER`:
 
 ```bash
-export MQSERVER="${MQIPY_TEST_CHANNEL}/TCP/${MQIPY_TEST_HOST}(${MQIPY_TEST_PORT})"
+export MQSERVER="${TEST_CHANNEL}/TCP/${TEST_HOST}(${TEST_PORT})"
 ```
 
 ```bash
 cd /opt/mqm/samp/bin/
-./amqsget ${MQIPY_TEST_QUEUE} ${MQIPY_TEST_QUEUEMANAGER}
+./amqsget ${TEST_QUEUE} ${TEST_QUEUEMANAGER}
 ```
 
 Open another terminal and check the `amqsgetc` output:
 ```bash
 cd /opt/mqm/samp/bin/
-echo "HI" | ./amqsput ${MQIPY_TEST_QUEUE} ${MQIPY_TEST_QUEUEMANAGER}
+echo "HI" | ./amqsput ${TEST_QUEUE} ${TEST_QUEUEMANAGER}
 ```
 
 
 
-### IBM websphere commands
+## IBM websphere commands
 + Create a queue manager:
 ```bash 
 crtmqm $QUEUE_MANAGER_NAME
