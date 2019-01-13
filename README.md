@@ -7,13 +7,13 @@ Scalable IBM Websphere MQ multi-thread scheduler.
 `IBM WebSphere 8.0`
 
 Download the `mqadv_dev80_linux_x86-64.tar.gz` from [IBM Website](https://developer.ibm.com/messaging/mq-downloads/)
-NOTICE THAT: You should download developer version
+NOTICE THAT: You should download developer version IBM message queue
 
 ```bash
 sudo apt-add-repository universe
 sudo apt-get install rpm pax
 mkdir mq8
-tar -xvf mqadv_dev80_linux_x86-64.tar.gz -C mq8
+tar xvzf mqadv_dev80_linux_x86-64.tar.gz -C mq8
 cd mq8
 mkdir rpms
 sudo ./mqlicense.sh -text_only
@@ -21,6 +21,7 @@ sudo -H TMPDIR=$(readlink -f rpms) ./crtmqpkg mq
 sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mqipy/x86_64/MQSeriesRuntime*.rpm
 sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mqipy/x86_64/MQSeriesServer*.rpm
 for pkg in rpms/mq_rpms/mqipy/x86_64/*.rpm; do sudo rpm -ivh --nodeps --force-debian $pkg; done
+
 ```
 
 ## Setup a MQ server for testing purposes:
@@ -36,7 +37,7 @@ export TEST_HOST="127.0.0.1"
 export TEST_PORT="8000"
 ```
 
-Create and start the `QueueManager`.
+Create and start the `Queue Manager`.
 
 ```bash
 sudo -u mqm /opt/mqm/bin/crtmqm ${TEST_QUEUEMANAGER}
@@ -47,6 +48,7 @@ Create the queue.
 
 ```bash
 echo "DEFINE QLOCAL (${TEST_QUEUE})" | sudo -u mqm runmqsc ${TEST_QUEUEMANAGER}
+crtmqm ${TEST_QUEUE}
 ```
 
 #### TCP Listener
@@ -91,7 +93,12 @@ echo "HI" | ./amqsput ${TEST_QUEUE} ${TEST_QUEUEMANAGER}
 
 
 
-## IBM websphere commands
+## IBM websphere useful commands
+NOTICE THAT: Add the binaries to PATH:
+```bash 
+echo "export PATH=$PATH:/opt/mqm/bin"
+source .bashrc
+```
 + Create a queue manager:
 ```bash 
 crtmqm $QUEUE_MANAGER_NAME
