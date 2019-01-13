@@ -95,8 +95,8 @@ echo "HI" | ./amqsput ${TEST_QUEUE} ${TEST_QUEUEMANAGER}
 ## IBM websphere useful commands
 NOTICE THAT: Add the binaries to PATH:
 ```bash 
-echo "export PATH=$PATH:/opt/mqm/bin"
-echo "export PATH=$PATH:/opt/mqm/samp/bin"
+export PATH=$PATH:/opt/mqm/bin
+export PATH=$PATH:/opt/mqm/samp/bin
 source .bashrc
 ```
 + Create a queue manager:
@@ -144,9 +144,10 @@ LimitNPROC=4096
 WantedBy=multi-user.target
 ```
 
-+ Reload deamons:
++ Reload deamons and enable it in startup:
 ```bash
 systemctl daemon-reload
+systemctl enable mq@<QUEUE_MANAGER_NAME>
 ```
 
 + To start your queue manager use the following commands:
