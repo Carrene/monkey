@@ -13,7 +13,7 @@ NOTICE THAT: You should download developer version
 sudo apt-add-repository universe
 sudo apt-get install rpm pax
 mkdir mq8
-tar -xvf mqadv_dev80_linux_x86-64.tar.gz -C mq75
+tar -xvf mqadv_dev80_linux_x86-64.tar.gz -C mq8
 cd mq8
 mkdir rpms
 sudo ./mqlicense.sh -text_only
@@ -29,24 +29,24 @@ Issue some variables to configure unittests:
 
 ```bash
 source /opt/mqm/bin/setmqenv -s
-export MQIPY_TEST_QUEUEMANAGER="TEST.QM"
-export MQIPY_TEST_QUEUE="TEST.QUEUE"
-export MQIPY_TEST_CHANNEL="TEST.CHANNEL"
-export MQIPY_TEST_HOST="127.0.0.1"
-export MQIPY_TEST_PORT="8000"
+export TEST_QUEUEMANAGER="TEST.QM"
+export TEST_QUEUE="TEST.QUEUE"
+export TEST_CHANNEL="TEST.CHANNEL"
+export TEST_HOST="127.0.0.1"
+export TEST_PORT="8000"
 ```
 
 Create and start the `QueueManager`.
 
 ```bash
-sudo -u mqm /opt/mqm/bin/crtmqm ${MQIPY_TEST_QUEUEMANAGER}
-sudo -u mqm /opt/mqm/bin/strmqm ${MQIPY_TEST_QUEUEMANAGER}
+sudo -u mqm /opt/mqm/bin/crtmqm ${TEST_QUEUEMANAGER}
+sudo -u mqm /opt/mqm/bin/strmqm ${TEST_QUEUEMANAGER}
 ```
 
 Create the queue.
 
 ```bash
-echo "DEFINE QLOCAL (${MQIPY_TEST_QUEUE})" | sudo -u mqm runmqsc ${MQIPY_TEST_QUEUEMANAGER}
+echo "DEFINE QLOCAL (${TEST_QUEUE})" | sudo -u mqm runmqsc ${TEST_QUEUEMANAGER}
 ```
 
 #### TCP Listener
@@ -87,4 +87,81 @@ Open another terminal and check the `amqsgetc` output:
 ```bash
 cd /opt/mqm/samp/bin/
 echo "HI" | ./amqsput ${MQIPY_TEST_QUEUE} ${MQIPY_TEST_QUEUEMANAGER}
+```
+
+
+
+### IBM websphere commands
++ Create a queue manager:
+```bash 
+crtmqm $QUEUE_MANAGER_NAME
+```
+
++ Delete a queue manager:
+```bash
+dltmqm $QUEUE_MANAGER_NAME
+```
+
++ Start a queue manager
+```bash
+strmqm $QUEUE_MANAGER_NAME
+```
+
++ Stopping queue manager:
+You can wait for queue manager to shutdown:
+```bash
+endmqm -w $QUEUE_MANAGER_NAME
+```
+Or you can shut it down immediately:
+```bash
+endmqm -i $QUEUEU_MANAGER_NAME
+```
+
++ In order to run a message queue at booting:
+```bash
+echo "
+[Unit]
+Description=IBM MQ V8 queue manager %I
+After=network.target
+[Service]
+ExecStart=/opt/mqm/bin/strmqm %I
+ExecStop=/opt/mqm/bin/endmqm -w %I
+Type=forking
+User=mqm
+Group=mqm
+KillMode=none
+LimitNOFILE=10240
+LimitNPROC=4096
+[Install]
+WantedBy=multi-user.target
+" > /etc/systemd/system/mq@.service
+systemctl daemon-reload
+systemctl enable mq@.service
+```
+
++ To start your queue manager use the following commands:
+```bash
+systemctl start mq@foo_QM
+```
+
++ Display queue managers and their status:
+```bash
+dspmq
+```
+
+#### Write, pop and monitor messages in queue
+
++ Write a message in queue:
+```bash
+echo "MESSAGE" | amqsput $QUEUE_NAME $QUEUE_MANAGER_NAME
+```
+
++ Get messages off a queue:
+```bash
+amqsget $QUEUE_NAME $QUEUE_MANAGER_NAME
+```
+
++ Browse, in order to monitor messages in a queue:
+```bash
+amqsbcg $QUEUE_NAME $QUEUE_MANAGER_NAME
 ```
