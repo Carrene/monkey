@@ -18,9 +18,9 @@ cd mq8
 mkdir rpms
 sudo ./mqlicense.sh -text_only
 sudo -H TMPDIR=$(readlink -f rpms) ./crtmqpkg mq
-sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mqipy/x86_64/MQSeriesRuntime*.rpm
-sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mqipy/x86_64/MQSeriesServer*.rpm
-for pkg in rpms/mq_rpms/mqipy/x86_64/*.rpm; do sudo rpm -ivh --nodeps --force-debian $pkg; done
+sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mq/x86_64/MQSeriesRuntime*.rpm
+sudo rpm -ivh --nodeps --force-debian rpms/mq_rpms/mq/x86_64/MQSeriesServer*.rpm
+for pkg in rpms/mq_rpms/mq/x86_64/*.rpm; do sudo rpm -ivh --nodeps --force-debian $pkg; done
 
 ```
 
