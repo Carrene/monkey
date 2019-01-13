@@ -144,7 +144,7 @@ LimitNPROC=4096
 WantedBy=multi-user.target
 ```
 
-+ Reload deamons and enable it in startup:
++ Reload deamon and enable it in startup:
 ```bash
 systemctl daemon-reload
 systemctl enable mq@<QUEUE_MANAGER_NAME>
