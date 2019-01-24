@@ -7,7 +7,8 @@ Scalable IBM Websphere MQ multi-thread scheduler.
 `IBM WebSphere 8.0`
 
 Download the `mqadv_dev80_linux_x86-64.tar.gz` from [IBM Website](https://developer.ibm.com/messaging/mq-downloads/)
-NOTICE THAT: You should download developer version IBM message queue
+
+**NOTICE THAT**: You should download developer version IBM message queue
 
 ```bash
 sudo apt-add-repository universe
