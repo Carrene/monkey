@@ -15,7 +15,7 @@ sudo apt-add-repository universe
 sudo apt-get install rpm pax
 mkdir mq8
 tar xvzf mqadv_dev80_linux_x86-64.tar.gz -C mq8
-cd mq8
+cd mq8/MQServer
 mkdir rpms
 sudo ./mqlicense.sh -text_only
 sudo -H TMPDIR=$(readlink -f rpms) ./crtmqpkg mq
