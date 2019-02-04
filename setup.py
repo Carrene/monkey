@@ -11,7 +11,7 @@ with open(os.path.join(os.path.dirname(__file__), 'monkey', '__init__.py')) as v
 dependencies = [
     'khayyam',
     'pymqi',
-    'pymlconf'
+    'pymlconf == 0.8.9'
 ]
 
 
@@ -30,7 +30,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         'Intended Audience :: Developers',
         'Operating System :: Unix',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries'
     ],
 )

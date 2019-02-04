@@ -4,7 +4,7 @@ import Queue
 
 import pymqi
 
-from configuration import settings
+from .configuration import settings
 
 
 jobs = Queue.Queue(maxsize=settings.queue_size)

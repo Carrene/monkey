@@ -9,7 +9,7 @@ from .configuration import settings, configure
 from .cli import args
 
 
-__version__ = '0.1.2'
+__version__ = '1.0.0'
 
 
 def main():
