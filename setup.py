@@ -24,7 +24,7 @@ setup(
     packages=find_packages(),
     install_requires=dependencies,
     entry_points={
-        'console_scripts': ['monkey = monkey:main']
+        'console_scripts': ['monkey = monkey.entry_point:main']
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",

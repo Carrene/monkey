@@ -1,8 +1,6 @@
 
 import pymlconf
 
-from cli import args
-
 
 settings = pymlconf.DeferredConfigManager()
 
@@ -22,7 +20,7 @@ chunk: 1024
 """
 
 
-def configure():
+def configure(filename=None):
     settings.load(builtin=BUILTIN_CONFIGURATION)
-    if args.config_file:
-        settings.load_files([args.config_file])
+    if filename:
+        settings.load_files(filename)
