@@ -24,3 +24,4 @@ def configure(filename=None):
     settings.load(builtin=BUILTIN_CONFIGURATION)
     if filename:
         settings.load_files(filename)
+

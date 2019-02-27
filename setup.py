@@ -11,7 +11,11 @@ with open(os.path.join(os.path.dirname(__file__), 'monkey', '__init__.py')) as v
 dependencies = [
     'khayyam',
     'pymqi',
-    'pymlconf == 0.8.9'
+    'pymlconf == 0.8.9',
+    'bs4',
+    'ujson',
+    'requests',
+    'kavenegar'
 ]
 
 
@@ -30,7 +34,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         'Intended Audience :: Developers',
         'Operating System :: Unix',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 2.7',
         'Topic :: Software Development :: Libraries'
     ],
 )
