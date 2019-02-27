@@ -9,4 +9,3 @@ from .configuration import settings, configure
 
 
 __version__ = '1.0.0'
-
