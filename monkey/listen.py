@@ -21,7 +21,8 @@ class Listen(Launcher, RequireSubCommand):
         return parser
 
     def launch(self):
-        configure()
+        configure(filename=self.args.config_file)
+
         from .job import Job
         thread_pool = [
             threading.Thread(
