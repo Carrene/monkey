@@ -58,8 +58,15 @@ class Pop(Launcher, RequireSubCommand):
                     print(message)
                 else:
                     token = BeautifulSoup(message, features="lxml")
+<<<<<<< Updated upstream
                     phone = getattr(token, 'token-register-bmi')['phone-no']
                     code = getattr(token, 'token-register-bmi')['key']
+=======
+                    phone = getattr(token, 'token-register')['phone-no']
+                    code = getattr(token, 'token-register')['key']
+                    print(f'SMS is sending for {phone} with '\
+                          'activation-code: {code}')
+>>>>>>> Stashed changes
                     sms_provider.send(phone, code)
 
                 # Reset the MsgId, CorrelId & GroupId so that we can reuse

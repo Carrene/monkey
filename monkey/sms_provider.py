@@ -7,10 +7,7 @@ from kavenegar import APIException, HTTPException, KavenegarAPI
 
 class SmsProvider:  # pragma: no cover
     def send(self, to_number, text):
-        print('SMS is sending for number : %s with text : %s by : %s' %
-            (to_number, text, self.__class__.__name__)
-        )
-
+        pass
 
 class CmSmsProvider(SmsProvider):  # pragma: no cover
     def send(self, to_number, text):
