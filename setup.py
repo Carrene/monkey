@@ -13,7 +13,6 @@ dependencies = [
     'pymqi',
     'pymlconf == 0.8.9',
     'bs4',
-    'ujson',
     'requests',
     'kavenegar'
 ]

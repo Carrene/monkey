@@ -1,16 +1,11 @@
-import ujson
+import json
 import requests
-
 from kavenegar import APIException, HTTPException, KavenegarAPI
-
 
 
 class SmsProvider:  # pragma: no cover
     def send(self, to_number, text):
-        print('SMS is sending for number : %s with text : %s by : %s' %
-            (to_number, text, self.__class__.__name__)
-        )
-
+        pass
 
 class CmSmsProvider(SmsProvider):  # pragma: no cover
     def send(self, to_number, text):
@@ -29,7 +24,7 @@ class CmSmsProvider(SmsProvider):  # pragma: no cover
                 }]
             }
         }
-        data = ujson.dumps(data)
+        data = json.dumps(data)
 
         response = requests.post(
             'https://gw.cmtelecom.com/v1.0/message',
