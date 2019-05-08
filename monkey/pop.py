@@ -54,12 +54,18 @@ class Pop(Launcher, RequireSubCommand):
                 # Wait up to to gmo.WaitInterval for a new message.
                 message = queue.get(None, md, gmo)
 
+                token = BeautifulSoup(message, features="lxml")
+                phone = getattr(token, 'token-register')['phone-no']
+                code = getattr(token, 'token-register')['key']
+
+                print(
+                    'SMS is sending for number: %s ' \
+                    'with activation code: %s' % (phone, code)
+                )
+
+                sys.stdout.flush()
+
                 if self.args.send:
-                    print(message)
-                else:
-                    token = BeautifulSoup(message, features="lxml")
-                    phone = getattr(token, 'token-register')['phone-no']
-                    code = getattr(token, 'token-register')['key']
                     sms_provider.send(phone, code)
 
                 # Reset the MsgId, CorrelId & GroupId so that we can reuse
