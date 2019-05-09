@@ -1,6 +1,7 @@
 from __future__ import print_function
 import threading
 import Queue
+import sys
 
 import pymqi
 
@@ -34,6 +35,7 @@ class Job:
                 message = message.strip()
                 if message:
                     print(self.worker_name, message)
+                    sys.stdout.flush()
                     thread_local.queue.put(message)
                 message = next_message
             else:
