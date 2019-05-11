@@ -7,10 +7,7 @@ from kavenegar import APIException, HTTPException, KavenegarAPI
 
 class SmsProvider:  # pragma: no cover
     def send(self, to_number, text):
-        print('SMS is sending for number : %s with text : %s by : %s' %
-            (to_number, text, self.__class__.__name__)
-        )
-
+        pass
 
 class CmSmsProvider(SmsProvider):  # pragma: no cover
     def send(self, to_number, text):
@@ -93,11 +90,3 @@ class AutomaticSmsProvider(SmsProvider):  # pragma: no cover
         else:
             self.real_sms_provider.send(to_number=to_number, text=text)
 
-
-class ConsoleSmsProvider(SmsProvider):  # pragma: no cover
-    def send(self, to_number, text):
-        SmsProvider().send(to_number, text)
-        print(
-            'SMS send request received for number : %s with text : %s' %
-            (to_number, text)
-        )
