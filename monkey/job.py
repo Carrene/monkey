@@ -29,7 +29,7 @@ class Job:
                 print(self.worker_name, 'Done')
                 break
             elif b'\n' in chunk:
-                chunk, next_message = chunk.split(b'\n')
+                chunk, next_message = chunk.split(b'\n', 1)
                 message += chunk
                 message = message.strip()
                 if message:
