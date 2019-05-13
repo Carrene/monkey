@@ -1,4 +1,4 @@
-import ujson
+import json
 import requests
 
 from kavenegar import APIException, HTTPException, KavenegarAPI
@@ -26,7 +26,7 @@ class CmSmsProvider(SmsProvider):  # pragma: no cover
                 }]
             }
         }
-        data = ujson.dumps(data)
+        data = json.dumps(data)
 
         response = requests.post(
             'https://gw.cmtelecom.com/v1.0/message',
