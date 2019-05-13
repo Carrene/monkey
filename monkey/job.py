@@ -29,13 +29,13 @@ class Job:
                 print(self.worker_name, 'Done')
                 break
             elif b'\n' in chunk:
-                chunk, next_message = chunk.split(b'\n')
+                chunk, rest = chunk.split(b'\n', 1)
                 message += chunk
                 message = message.strip()
                 if message:
                     print(self.worker_name, message)
                     thread_local.queue.put(message)
-                message = next_message
+                message = rest
             else:
                 message += chunk
 
