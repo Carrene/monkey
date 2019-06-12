@@ -8,4 +8,4 @@ import stat
 from .configuration import settings, configure
 
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
